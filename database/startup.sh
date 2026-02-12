@@ -142,6 +142,13 @@ export POSTGRES_DB="${DB_NAME}"
 export POSTGRES_PORT="${DB_PORT}"
 EOF
 
+# Apply schema migrations + seeds (idempotent)
+echo ""
+echo "Applying database migrations/seeds..."
+chmod +x migrations/run_migrations.sh 2>/dev/null || true
+./migrations/run_migrations.sh
+
+echo ""
 echo "PostgreSQL setup complete!"
 echo "Database: ${DB_NAME}"
 echo "User: ${DB_USER}"
